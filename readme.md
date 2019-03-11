@@ -1,8 +1,8 @@
 Код написан по алгоритму: 
-    1. Создаём муравьёв.
-    2. Определяем правила движение муравьев по графу.
-    3. Обновляем феромон.
-    4. Определяем коэффициенты муравьиного алгоритма.
+1. Создаём муравьёв.
+2. Определяем правила движение муравьев по графу.
+3. Обновляем феромон.
+4. Определяем коэффициенты муравьиного алгоритма.
 
 Код: 
 
@@ -19,6 +19,13 @@ class Ant:
     def run(self, matrix, pheromons, alpha, beta):
         current_vertex = self.start_vertex
         for _ in range(matrix.shape[0] - 1):
+    
+#Инициализируем класс муравьев
+class Ant:
+    def __init__(self, start_vertex):
+        self.start_vertex = start_vertex
+        self.vertexs = [self.start_vertex]
+        self.L = 0
             list_p = []
             list_vertex = []
             for vertex in range(matrix.shape[0]):
@@ -38,12 +45,11 @@ class Ant:
                     next_vertex = num
                     break
             self.L += matrix[current_vertex][next_vertex]
-
             current_vertex = next_vertex
             self.vertexs.append(current_vertex)
         self.L += matrix[self.vertexs[-1]][self.vertexs[0]]
 
-#Инициализация класса таблицы расстояний        
+#Инициализация класса таблицы расстояний  
 class Graph:
     def __init__(self, matrix, num_ants, alpha, beta, count_epoch, p):
         self.alpha = alpha
@@ -55,14 +61,12 @@ class Graph:
         self.count_epoch = count_epoch
         self.p = p
         self.best_L = 999999
-
     def solve(self):
         for _ in range(self.count_epoch):
             self.ants = []
             for i in range(self.num_ants):
                 random_start_vertix = np.random.randint(0, self.num_vertix)
                 self.ants.append(Ant(start_vertex=random_start_vertix))
-
             for ant in self.ants:
                 ant.run(matrix=self.matrix, pheromons=self.pheromons, alpha=self.alpha, beta=self.beta)
 
@@ -75,12 +79,10 @@ class Graph:
                     first_eager = (current_vertex, next_vertex)
                     second_eager = (next_vertex, current_vertex)
                     if first_eager not in set_eager and second_eager not in set_eager:
-
                         set_eager.add(first_eager)
                         set_eager.add(second_eager)
                         self.pheromons[next_vertex][current_vertex] *= (1 - self.p)
                         self.pheromons[current_vertex][next_vertex] *= (1 - self.p)
-
                     self.pheromons[next_vertex][current_vertex] += (1 / ant.L)
                     self.pheromons[current_vertex][next_vertex] += (1 / ant.L)
                 if self.best_L > ant.L:
