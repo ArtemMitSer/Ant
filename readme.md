@@ -6,26 +6,17 @@
 
 ## Код: 
 
-    import numpy as np
-
-##### Инициализация класса муравьев
-    class Ant:
-        def __init__(self, start_vertex):
-            self.start_vertex = start_vertex
-            self.vertexs = [self.start_vertex]
-            self.L = 0
-
-##### Описание метода, по которому будут двигаться муравьи
+    import nampy as np
+###### Инициализация класса муравьев 
+        class Ant:
+            def __init__(self, start_vertex):
+                self.start_vertex = start_vertex
+                self.vertexs = [self.start_vertex]
+                self.L = 0
+###### Описание метода, по которому будут двигаться муравьи
         def run(self, matrix, pheromons, alpha, beta):
             current_vertex = self.start_vertex
             for _ in range(matrix.shape[0] - 1):
-
-##### Инициализация класса муравьев
-    class Ant:
-        def __init__(self, start_vertex):
-            self.start_vertex = start_vertex
-            self.vertexs = [self.start_vertex]
-            self.L = 0
                 list_p = []
                 list_vertex = []
                 for vertex in range(matrix.shape[0]):
@@ -48,8 +39,7 @@
                 current_vertex = next_vertex
                 self.vertexs.append(current_vertex)
             self.L += matrix[self.vertexs[-1]][self.vertexs[0]]
-
-##### Инициализация класса таблицы расстояний  
+###### Инициализация класса таблицы расстояний
     class Graph:
         def __init__(self, matrix, num_ants, alpha, beta, count_epoch, p):
             self.alpha = alpha
@@ -69,8 +59,7 @@
                     self.ants.append(Ant(start_vertex=random_start_vertix))
                 for ant in self.ants:
                     ant.run(matrix=self.matrix, pheromons=self.pheromons, alpha=self.alpha, beta=self.beta)
-
-##### Обновление ферамона
+###### Обновление ферамона 
                 set_eager = set()
                 for ant in self.ants:
                     vertexs = ant.vertexs
@@ -88,20 +77,17 @@
                     if self.best_L > ant.L:
                         self.best_L = ant.L
             return self.best_L
-
-##### Получение входных данных
+###### Получение входных данных
     a = input()
     arr = list(map(int, a.split()))
     matrix = arr
     data = []
     data.append(matrix)
-
     for i in range((len(matrix))-1):
         a = input()
         arr = list(map(int, a.split()))
         data.append(arr)
-    data = np.array(data)
-
-##### Запуск алгоритма. Определение коэффициентов алгоритма
+    data = np.array(data)   
+###### Запуск алгоритма. Определение коэффициентов алгоритма
     graph = Graph(matrix=data, num_ants=20, alpha=1, beta=1, count_epoch=1500, p=0.5)
     print(graph.solve())
